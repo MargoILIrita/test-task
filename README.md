@@ -1,5 +1,6 @@
 Test Task
 =========
+[![Build Status](https://travis-ci.org/MargoILIrita/test-task.svg?branch=master)](https://travis-ci.org/MargoILIrita/test-task)
 
 Prerequisites
 -------------
