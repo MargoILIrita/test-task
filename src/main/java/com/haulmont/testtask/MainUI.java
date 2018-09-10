@@ -14,7 +14,7 @@ public class MainUI extends UI {
         layout.setSizeFull();
         layout.setMargin(true);
 
-        layout.addComponent(new Label("Main UI"));
+        layout.addComponent(new Label("Main UI test"));
 
         setContent(layout);
     }
