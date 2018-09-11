@@ -1,13 +1,18 @@
 package com.haulmont.testtask.model.Entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+
 
 @Entity
 public class Contact {
+    @Id
+    @GeneratedValue
     private long id;
 
-
+    @Column(nullable = false)
     private String name;
 
     private String number;
@@ -38,7 +43,6 @@ public class Contact {
         this.email = email;
     }
 
-    @Id
     public long getId() {
         return id;
     }
