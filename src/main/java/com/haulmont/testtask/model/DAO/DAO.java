@@ -12,5 +12,8 @@ public abstract class DAO {
 
     public void init(){
         entityManagerFactory = Persistence.createEntityManagerFactory("ru.easyjava.data.jpa.hibernate");
+        EntityManager em = entityManagerFactory.createEntityManager();
+        em.getTransaction().begin();
+        em.createQuery("");
     }
 }

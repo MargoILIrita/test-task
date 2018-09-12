@@ -9,10 +9,6 @@
             <property name="hibernate.connection.url" value="jdbc:hsqldb:mem:test"/>
             <property name="hibernate.connection.username" value="SA"/>
             <property name="hibernate.connection.password" value=""/>
-            <property name="hibernate.hbm2ddl.auto" value="update"/>
-            <property name="hibernate.hbm2ddl.import_files_sql_extractor" value="org.hibernate.tool.hbm2ddl.M‌​ultipleLinesSqlCommandExtractor"/>
-            <property name="hibernate.hbm2ddl.import_files" value="import.sql"/>
-            <property name="hibernate.show_sql" value="true"/>
         </properties>
     </persistence-unit>
 </persistence>
