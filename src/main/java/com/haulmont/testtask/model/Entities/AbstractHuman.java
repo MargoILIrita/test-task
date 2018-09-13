@@ -7,7 +7,6 @@ import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
 public class AbstractHuman {
-    @GeneratedValue
     @Id
     private long id;
 
