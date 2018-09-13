@@ -9,13 +9,12 @@ import javax.persistence.Id;
 @Entity
 public class Contact {
     @Id
-    @GeneratedValue
     private long id;
 
     @Column(nullable = false)
     private String name;
 
-    private String number;
+    private String phone;
 
     private String email;
 
@@ -27,12 +26,12 @@ public class Contact {
         this.name = name;
     }
 
-    public String getNumber() {
-        return number;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setNumber(String number) {
-        this.number = number;
+    public void setPhone(String number) {
+        this.phone = number;
     }
 
     public String getEmail() {

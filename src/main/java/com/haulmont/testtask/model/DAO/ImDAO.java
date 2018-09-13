@@ -10,12 +10,12 @@ public class ImDAO extends DAO {
         Contact a = new Contact();
         a.setEmail("trash");
         a.setName("trash");
-         a.setNumber("trash");
+        a.setPhone("trash");
         EntityManager em = entityManagerFactory.createEntityManager();
         em.getTransaction().begin();
         em.persist(a);
         em.getTransaction().commit();
-        List res = (List) em.createQuery("from Contact", Contact.class)
+        List res = (List) em.createQuery("from Contact ", Contact.class)
                             .getResultList();
         em.close();
         return res;

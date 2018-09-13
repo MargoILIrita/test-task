@@ -20,11 +20,19 @@ public class MainUI extends UI {
         VerticalLayout layout = new VerticalLayout();
         layout.setSizeFull();
         layout.setMargin(true);
+        Table table = new Table("Contacts");
+        table.addContainerProperty("Name", String.class, null);
+        table.addContainerProperty("Phone", String.class, null);
+        table.addContainerProperty("Email", String.class, null);
+
         for (Object con: ((ImDAO) dao).test()
              ) {
             Contact c = (Contact) con;
-            layout.addComponent(new Label(String.format("%s, %s, %s", c.getEmail(), c.getName(), c.getName())));
+            table.addItem(new Object[]{c.getName(), c.getPhone(), c.getEmail()}, c.getId());
         }
+
+        table.setPageLength(table.size());
+        layout.addComponent(table);
 
         setContent(layout);
     }
