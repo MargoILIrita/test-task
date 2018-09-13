@@ -9,13 +9,13 @@ import javax.persistence.Enumerated;
 public class Doctor extends AbstractHuman {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private String specialization;
+    private Specialization specialization;
 
-    public String getSpecialization() {
+    public Specialization getSpecialization() {
         return specialization;
     }
 
-    public void setSpecialization(String specialization) {
+    public void setSpecialization(Specialization specialization) {
         this.specialization = specialization;
     }
 }
