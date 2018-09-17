@@ -3,7 +3,7 @@ package com.haulmont.testtask.model.Entities;
 import javax.persistence.Entity;
 
 @Entity
-public class Patient extends AbstractHuman {
+public class Patient  extends AbstractHuman {
 
     private String phone_number;
 

@@ -3,8 +3,11 @@ package com.haulmont.testtask.model.Entities;
 import com.sun.istack.internal.NotNull;
 import sun.util.calendar.BaseCalendar;
 
+import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.sql.Date;
 
+@Entity
 public class Recipe {
     @Id
     private long id;
@@ -17,7 +20,7 @@ public class Recipe {
 
     private String description;
 
-    private BaseCalendar.Date date;
+    private Date date;
 
     private long validity;
 
@@ -55,14 +58,6 @@ public class Recipe {
         this.description = description;
     }
 
-    public BaseCalendar.Date getDate() {
-        return date;
-    }
-
-    public void setDate(BaseCalendar.Date date) {
-        this.date = date;
-    }
-
     public long getValidity() {
         return validity;
     }
@@ -77,5 +72,13 @@ public class Recipe {
 
     public void setPriority(Priority priority) {
         this.priority = priority;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }

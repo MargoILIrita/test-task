@@ -41,4 +41,12 @@ public class AbstractHuman {
     public void setPatronymic(String patronymic) {
         this.patronymic = patronymic;
     }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 }
