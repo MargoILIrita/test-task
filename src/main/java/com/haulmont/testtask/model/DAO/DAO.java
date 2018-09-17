@@ -9,6 +9,8 @@ import javax.persistence.Persistence;
 public abstract class DAO {
     protected static EntityManagerFactory entityManagerFactory;
 public void init(){
+    if (entityManagerFactory == null) {
         entityManagerFactory = Persistence.createEntityManagerFactory("ru.easyjava.data.jpa.hibernate");
+    }
     }
 }

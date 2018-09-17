@@ -8,7 +8,6 @@ import javax.persistence.Enumerated;
 @Entity
 public class Doctor extends AbstractHuman {
     @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
     private String specialization;
 
     public String getSpecialization() {

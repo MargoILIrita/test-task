@@ -1,10 +1,12 @@
 package com.haulmont.testtask.model.Entities;
 
-import com.sun.istack.internal.NotNull;
-import sun.util.calendar.BaseCalendar;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.sql.Date;
 
 @Entity
@@ -12,11 +14,13 @@ public class Recipe {
     @Id
     private long id;
 
-    @NotNull
-    private long doctor;
+    @ManyToOne
+    @JoinColumn(name = "doctor_id", nullable = false)
+    private Doctor doctor;
 
-    @NotNull
-    private long patient;
+    @ManyToOne
+    @JoinColumn(name = "patient_id", nullable = false)
+    private Patient patient;
 
     private String description;
 
@@ -24,6 +28,7 @@ public class Recipe {
 
     private long validity;
 
+    @Enumerated(EnumType.STRING)
     private Priority priority;
 
     public long getId() {
@@ -34,19 +39,19 @@ public class Recipe {
         this.id = id;
     }
 
-    public long getDoctor() {
+    public Doctor getDoctor() {
         return doctor;
     }
 
-    public void setDoctor(long doctor) {
+    public void setDoctor(Doctor doctor) {
         this.doctor = doctor;
     }
 
-    public long getPatient() {
+    public Patient getPatient() {
         return patient;
     }
 
-    public void setPatient(long patient) {
+    public void setPatient(Patient patient) {
         this.patient = patient;
     }
 

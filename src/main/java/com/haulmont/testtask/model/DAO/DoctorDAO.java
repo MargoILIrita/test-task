@@ -4,12 +4,18 @@ import com.haulmont.testtask.model.Entities.Doctor;
 
 import javax.persistence.EntityManager;
 
-public abstract class DoctorDAO extends DAO {
+public class DoctorDAO extends DAO {
 
     private EntityManager entityManager;
 
     public DoctorDAO() {
-        entityManager = entityManagerFactory.createEntityManager();
+        try {
+            super.init();
+            entityManager = entityManagerFactory.createEntityManager();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     public Doctor changeDoctor(Doctor doc){
