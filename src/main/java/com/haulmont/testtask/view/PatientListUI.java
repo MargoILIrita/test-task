@@ -3,6 +3,7 @@ package com.haulmont.testtask.view;
 import com.haulmont.testtask.model.DAO.DAO;
 import com.haulmont.testtask.model.Entities.Patient;
 import com.vaadin.annotations.Theme;
+import com.vaadin.data.Property;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.FormLayout;
@@ -16,6 +17,7 @@ import com.vaadin.ui.themes.ValoTheme;
 public class PatientListUI extends UI{
 
     private String phoneformat = "+7 (%s) %s";
+    private Object tableValue;
 
     @Override
     protected void init(VaadinRequest request) {
@@ -33,12 +35,9 @@ public class PatientListUI extends UI{
         HorizontalLayout layout1 = new HorizontalLayout();
 
         Button add = new Button("Add");
-        add.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                getPage().setLocation("/add?name=\"test\"");
-                //getSession().close();
-            }
+        add.addClickListener((Button.ClickListener) event -> {
+            getPage().setLocation(String.format("/add?id=%s",tableValue));
+
         });
         layout1.addComponent(add);
         layout1.addComponent(new Button("Change"));
@@ -69,6 +68,12 @@ public class PatientListUI extends UI{
 
 
         table.setPageLength(table.size());
+        table.setSelectable(true);
+        table.setImmediate(true);
+
+        table.addValueChangeListener((Property.ValueChangeListener) event -> {
+    tableValue = table.getValue();
+        });
         return table;
     }
 }
