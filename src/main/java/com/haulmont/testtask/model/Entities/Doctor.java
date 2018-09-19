@@ -6,7 +6,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
 @Entity
-public class Doctor extends AbstractHuman {
+public class Doctor extends AbstractHuman implements DTO {
     @Column(nullable = false)
     private String specialization;
 
@@ -34,5 +34,16 @@ public class Doctor extends AbstractHuman {
 
     public void setSpecialization(String specialization) {
         this.specialization = specialization;
+    }
+
+    @Override
+    public String toString() {
+        return "Doctor{" +
+                       "specialization='" + specialization + '\'' +
+                       ", id=" + id +
+                       ", name='" + name + '\'' +
+                       ", surname='" + surname + '\'' +
+                       ", patronymic='" + patronymic + '\'' +
+                       '}';
     }
 }

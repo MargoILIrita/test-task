@@ -1,12 +1,13 @@
 package com.haulmont.testtask.model.DAO;
 
+import com.haulmont.testtask.model.Entities.DTO;
 import com.haulmont.testtask.model.Entities.Doctor;
 
-import javax.persistence.EntityManager;
+import java.util.List;
 
 public class DoctorDAO extends DAO {
 
-    public DoctorDAO() {
+     DoctorDAO() {
         try {
             super.init();
             entityManager = entityManagerFactory.createEntityManager();
@@ -16,24 +17,28 @@ public class DoctorDAO extends DAO {
         }
     }
 
-    public Doctor changeDoctor(Doctor doc){
-        return entityManager.merge(doc);
+    public Doctor changeEntity(DTO doc){
+        return entityManager.merge((Doctor) doc);
     }
 
-    public Doctor getDoctor(long id){
+    public Doctor getEntity(long id){
         return entityManager.find(Doctor.class, id);
     }
 
-    public Doctor addDoctor(Doctor doc){
+    public Doctor addEntity(DTO entity){
+         Doctor doc = (Doctor)entity;
         entityManager.persist(doc);
         entityManager.refresh(doc);
         return doc;
     }
-    public void deleteDoctor(Doctor doc){
-        entityManager.remove(doc);
+    public void deleteEntity(long id){
+        entityManager.remove(entityManager.find(Doctor.class, id));
     }
 
 
-
-
+    @Override
+    public List getList() {
+        return  (List) entityManager.createQuery("from Doctor", Doctor.class)
+                                    .getResultList();
+    }
 }

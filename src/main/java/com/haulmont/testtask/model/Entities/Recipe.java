@@ -11,7 +11,7 @@ import javax.persistence.ManyToOne;
 import java.sql.Date;
 
 @Entity
-public class Recipe {
+public class Recipe implements DTO{
     @Id
     @GeneratedValue
     private long id;
@@ -109,5 +109,18 @@ public class Recipe {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    @Override
+    public String toString() {
+        return "Recipe{" +
+                       "id=" + id +
+                       ", doctor=" + doctor +
+                       ", patient=" + patient +
+                       ", description='" + description + '\'' +
+                       ", date=" + date +
+                       ", validity=" + validity +
+                       ", priority=" + priority +
+                       '}';
     }
 }
