@@ -8,15 +8,16 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 public class AbstractHuman {
     @Id
-    private long id;
+    @GeneratedValue
+    protected long id;
 
     @Column(nullable = false)
-    private String name;
+    protected String name;
 
     @Column(nullable = false)
-    private String surname;
+    protected String surname;
 
-    private String patronymic;
+    protected String patronymic;
 
     public String getName() {
         return name;

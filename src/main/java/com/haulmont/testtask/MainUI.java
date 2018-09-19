@@ -15,7 +15,6 @@ public class MainUI extends UI {
     @Override
     protected void init(VaadinRequest request) {
         DAO dao = new DoctorDAO();
-        dao.init();
         VerticalLayout layout = new VerticalLayout();
         layout.setSizeFull();
         layout.setMargin(true);

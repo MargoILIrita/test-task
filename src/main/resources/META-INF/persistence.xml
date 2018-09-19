@@ -5,24 +5,24 @@
     <persistence-unit name="ru.easyjava.data.jpa.hibernate">
         <properties>
             <!-->delete auto creating later<-->
-            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <!--><property name="hibernate.hbm2ddl.auto" value="update"/><-->
             <property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect"/>
             <property name="hibernate.connection.url" value="jdbc:hsqldb:mem:test"/>
             <property name="hibernate.connection.username" value="SA"/>
             <property name="hibernate.connection.password" value=""/>
             <property name="hibernate.show_sql" value="true"/>
 
-            <!-->
-            <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
+            <property name="javax.persistence.schema-generation.database.action" value="create"/>
 
+            <!-->
             <property name="javax.persistence.schema-generation.drop-source" value="script"/>
             <property name="javax.persistence.schema-generation.drop-script-source" value="META-INF/drop.sql"/>
+            <-->
 
             <property name="javax.persistence.schema-generation.create-source" value="script"/>
             <property name="javax.persistence.schema-generation.create-script-source" value="META-INF/create.sql"/>
 
             <property name="javax.persistence.sql-load-script-source" value="META-INF/data.sql"/>
-            <-->
         </properties>
     </persistence-unit>
 </persistence>

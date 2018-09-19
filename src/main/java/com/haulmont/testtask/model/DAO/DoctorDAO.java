@@ -6,8 +6,6 @@ import javax.persistence.EntityManager;
 
 public class DoctorDAO extends DAO {
 
-    private EntityManager entityManager;
-
     public DoctorDAO() {
         try {
             super.init();

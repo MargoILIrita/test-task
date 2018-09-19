@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -12,6 +13,7 @@ import java.sql.Date;
 @Entity
 public class Recipe {
     @Id
+    @GeneratedValue
     private long id;
 
     @ManyToOne
@@ -30,6 +32,28 @@ public class Recipe {
 
     @Enumerated(EnumType.STRING)
     private Priority priority;
+
+    public Recipe() {
+    }
+
+    public Recipe(Doctor doctor, Patient patient, String description, Date date, long validity, Priority priority) {
+        this.doctor = doctor;
+        this.patient = patient;
+        this.description = description;
+        this.date = date;
+        this.validity = validity;
+        this.priority = priority;
+    }
+
+    public Recipe(long id, Doctor doctor, Patient patient, String description, Date date, long validity, Priority priority) {
+        this.doctor = doctor;
+        this.patient = patient;
+        this.description = description;
+        this.date = date;
+        this.validity = validity;
+        this.priority = priority;
+        this.id = id;
+    }
 
     public long getId() {
         return id;
