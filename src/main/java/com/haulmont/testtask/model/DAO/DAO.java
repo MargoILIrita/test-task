@@ -7,14 +7,15 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.util.*;
 
+import static com.haulmont.testtask.Constants.DOCTOR;
+import static com.haulmont.testtask.Constants.PATIENT;
+import static com.haulmont.testtask.Constants.RECIPE;
+
 /**
  * Created by Маргарита on 28.05.2016.
  */
 public abstract class DAO {
     private static EntityManagerFactory entityManagerFactory;
-    private final static String PATIENT = "com.haulmont.testtask.model.Entities.Patient";
-    private final static String DOCTOR = "com.haulmont.testtask.model.Entities.Doctor";
-    private final static String RECIPE = "com.haulmont.testtask.model.Entities.Recipe";
 
     protected static EntityManager entityManager;
 

@@ -1,73 +1,68 @@
 package com.haulmont.testtask.view;
 
 import com.haulmont.testtask.model.DAO.DAO;
-import com.haulmont.testtask.model.Entities.Patient;
-import com.vaadin.annotations.Theme;
+import com.haulmont.testtask.model.Entities.Doctor;
 import com.vaadin.data.Container;
 import com.vaadin.data.util.BeanItemContainer;
-import com.vaadin.data.validator.RegexpValidator;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.Window;
-import com.vaadin.ui.themes.ValoTheme;
 
-@Theme(ValoTheme.THEME_NAME)
-public class PatientFormUI extends Window {
-    private Patient patient = null;
+public class DoctorFormUI extends Window {
+    private Doctor doctor = null;
     private DAO dao = null;
     private BeanItemContainer container;
 
-    public  PatientFormUI(Patient patient, Container container) {
+    public  DoctorFormUI(Doctor doctor, Container container) {
         this.container = (BeanItemContainer)container;
         try {
-            dao = DAO.getImplementation(Patient.class);
+            dao = DAO.getImplementation(Doctor.class);
         }
         catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
-        if(patient != null) this.patient = patient;
+        if(doctor != null) this.doctor = doctor;
 
         FormLayout layout = printComponent();
         setContent(layout);
     }
 
-    public PatientFormUI(Container container){
+    public DoctorFormUI(Container container){
         this(null, container);
     }
 
     private FormLayout printComponent(){
         FormLayout layout = new FormLayout();
         TextField surname = new TextField("Last Name");
-        surname.setValue(patient != null ? patient.getLastName() : "");
+        surname.setValue(doctor != null ? doctor.getLastName() : "");
         surname.setRequired(true);
         layout.addComponent(surname);
 
         TextField name = new TextField("First Name");
-        name.setValue(patient != null ? patient.getName() : "");
+        name.setValue(doctor != null ? doctor.getName() : "");
         name.setRequired(true);
         layout.addComponent(name);
 
         TextField patronymic = new TextField("Patronymic");
-        patronymic.setValue(patient != null ? patient.getPatronymic():"");
+        patronymic.setValue(doctor != null ? doctor.getPatronymic():"");
         layout.addComponent(patronymic);
 
-        TextField phone = new TextField("Phone");
-        phone.setDescription("7 9XX XXXXXXX");
-        phone.setValue(patient != null ? patient.getPhone_number():"7");
-        phone.addValidator(new RegexpValidator("7 \\d{3} \\d{7}","Please, enter valid phone number"));
-        layout.addComponent(phone);
+        TextField specialization = new TextField("Specialization");
+        specialization.setValue(doctor != null ? doctor.getSpecialization(): "");
+        specialization.setRequired(true);
+        layout.addComponent(specialization);
 
         Button ok = new Button("OK");
         DAO finalDao = dao;
         ok.addClickListener((Button.ClickListener) event -> {
-            phone.validate();
-            if (patient == null){
-                finalDao.addEntity(new Patient(name.getValue(), surname.getValue(), patronymic.getValue(), phone.getValue().substring(1)));
+            System.out.println("addClickListener");
+            if (doctor == null){
+                finalDao.addEntity(new Doctor(name.getValue(), surname.getValue(), patronymic.getValue(), specialization.getValue()));
             }
             else {
-                finalDao.changeEntity(new Patient(patient.getId(),name.getValue(), surname.getValue(),
-                                                  patronymic.getValue(), phone.getValue().substring(1)));
+                finalDao.changeEntity(new Doctor(doctor.getId(),name.getValue(), surname.getValue(),
+                                                  patronymic.getValue(), specialization.getValue()));
             }
             container.removeAllItems();
             container.addAll(finalDao.getList());
