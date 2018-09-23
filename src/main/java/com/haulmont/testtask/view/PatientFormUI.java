@@ -55,9 +55,9 @@ public class PatientFormUI extends Window {
         layout.addComponent(patronymic);
 
         TextField phone = new TextField("Phone");
-        phone.setDescription("79XXXXXXXXX");
-        phone.setValue(patient != null ? "7" + patient.getPhone_number():"7");
-        phone.addValidator(new RegexpValidator("7\\d{10}","Please, enter valid phone number"));
+        phone.setDescription("7 9XX XXXXXXX");
+        phone.setValue(patient != null ? patient.getPhone_number():"7");
+        phone.addValidator(new RegexpValidator("7 \\d{3} \\d{7}","Please, enter valid phone number"));
         phone.setResponsive(false);
         layout.addComponent(phone);
 

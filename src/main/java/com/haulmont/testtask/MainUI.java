@@ -54,4 +54,36 @@ public class MainUI extends UI {
         });
         return layout;
     }
+
+    private FormLayout doctorsListTab(){
+        FormLayout layout = new FormLayout();
+        layout.setSizeFull();
+        layout.setMargin(true);
+
+        HorizontalLayout layout1 = new HorizontalLayout();
+
+        Button add = new Button("Add");
+        layout1.addComponent(add);
+        Button change = new Button("Change");
+        layout1.addComponent(change);
+        Button delete = new Button("Delete");
+        layout1.addComponent(delete);
+
+        layout.addComponent(layout1);
+
+        Table table = PatientListUtil.printTable();
+        layout.addComponent(table);
+
+        add.addClickListener((Button.ClickListener) event -> {
+            addWindow(new PatientFormUI(table.getContainerDataSource()));
+        });
+        change.addClickListener((Button.ClickListener) event -> {
+            addWindow(new PatientFormUI((Patient)table.getValue(), table.getContainerDataSource()));
+        });
+        delete.addClickListener((Button.ClickListener)  event ->{
+            PatientListUtil.deleteAction((Patient)table.getValue());
+            getPage().reload();
+        });
+        return layout;
+    }
 }

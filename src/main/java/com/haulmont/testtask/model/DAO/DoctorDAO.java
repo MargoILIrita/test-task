@@ -2,7 +2,15 @@ package com.haulmont.testtask.model.DAO;
 
 import com.haulmont.testtask.model.Entities.DTO;
 import com.haulmont.testtask.model.Entities.Doctor;
+import com.haulmont.testtask.model.Entities.Recipe;
+import org.hibernate.Criteria;
 
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import java.sql.PreparedStatement;
 import java.util.List;
 
 public class DoctorDAO extends DAO {
@@ -46,5 +54,11 @@ public class DoctorDAO extends DAO {
     public List getList() {
         return  (List) entityManager.createQuery("from Doctor", Doctor.class)
                                     .getResultList();
+    }
+
+    public int getStatistic(long id){
+        return entityManager.createQuery(
+                String.format("select count(*) from Recipe where doctor_id = %d", id)).getFirstResult();
+
     }
 }
