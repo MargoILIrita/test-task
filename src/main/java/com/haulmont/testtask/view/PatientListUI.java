@@ -4,6 +4,9 @@ import com.haulmont.testtask.model.DAO.DAO;
 import com.haulmont.testtask.model.Entities.Patient;
 import com.vaadin.annotations.Theme;
 import com.vaadin.data.Property;
+import com.vaadin.navigator.Navigator;
+import com.vaadin.navigator.View;
+import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.FormLayout;
@@ -22,39 +25,52 @@ public class PatientListUI extends UI{
 
     @Override
     protected void init(VaadinRequest request) {
-        DAO dao = null;
-        try {
-            dao = DAO.getImplementation(Patient.class);
+        setNavigator(new Navigator(this,this));
+        getNavigator().addView("a", new PatientFormUI());
+        getNavigator().addView("", new MainView());
+
+    }
+
+    private class MainView extends FormLayout implements View{
+
+        public MainView() {
+            DAO dao = null;
+            try {
+                dao = DAO.getImplementation(Patient.class);
+            }
+            catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            }
+            this.setSizeFull();
+            this.setMargin(true);
+
+            HorizontalLayout layout1 = new HorizontalLayout();
+
+            Button add = new Button("Add");
+            add.addClickListener((Button.ClickListener) event -> {
+                //getPage().open(String.format("/add?return=%s",THISPAGE),"Create new");
+                getNavigator().navigateTo("a");
+            });
+            layout1.addComponent(add);
+            Button change = new Button("Change");
+            change.addClickListener((Button.ClickListener) event -> {
+                getPage().setLocation(String.format("/add?id=%s&return=%s",tableValue, THISPAGE));
+
+            });
+            layout1.addComponent(change);
+            layout1.addComponent(new Button("Delete"));
+
+            this.addComponent(layout1);
+
+
+            this.addComponent(printTable(dao));
+
         }
-        catch (NoSuchMethodException e) {
-            e.printStackTrace();
+
+        @Override
+        public void enter(ViewChangeListener.ViewChangeEvent event) {
+
         }
-        FormLayout layout = new FormLayout();
-        layout.setSizeFull();
-        layout.setMargin(true);
-
-        HorizontalLayout layout1 = new HorizontalLayout();
-
-        Button add = new Button("Add");
-        add.addClickListener((Button.ClickListener) event -> {
-            getPage().setLocation(String.format("/add?return=%s",THISPAGE));
-
-        });
-        layout1.addComponent(add);
-        Button change = new Button("Change");
-        change.addClickListener((Button.ClickListener) event -> {
-            getPage().setLocation(String.format("/add?id=%s&return=%s",tableValue, THISPAGE));
-
-        });
-        layout1.addComponent(change);
-        layout1.addComponent(new Button("Delete"));
-
-        layout.addComponent(layout1);
-
-
-        layout.addComponent(printTable(dao));
-
-        setContent(layout);
     }
 
     private Table printTable(DAO dao){

@@ -4,20 +4,22 @@ import com.haulmont.testtask.model.DAO.DAO;
 import com.haulmont.testtask.model.Entities.Patient;
 import com.vaadin.annotations.Theme;
 import com.vaadin.data.validator.RegexpValidator;
+import com.vaadin.navigator.View;
+import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.FormLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.themes.ValoTheme;
 
 @Theme(ValoTheme.THEME_NAME)
-public class PatientFormUI extends UI {
+public class PatientFormUI extends FormLayout implements View {
     private Patient patient = null;
     private String returnURL = "";
 
-    @Override
-    protected void init(VaadinRequest request) {
+    public PatientFormUI() {
          DAO dao = null;
         try {
             dao = DAO.getImplementation(Patient.class);
@@ -25,8 +27,8 @@ public class PatientFormUI extends UI {
         catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
-        if(request.getParameter("id") != null) patient = (Patient) dao.getEntity(Long.parseLong(request.getParameter("id")));
-        returnURL = request.getParameter("return");
+       // if(request.getParameter("id") != null) patient = (Patient) dao.getEntity(Long.parseLong(request.getParameter("id")));
+        /*returnURL = request.getParameter("return");
 
         FormLayout layout = new FormLayout();
         TextField surname = new TextField("Surname");
@@ -38,16 +40,19 @@ public class PatientFormUI extends UI {
         TextField name = new TextField("Name");
         name.setValue(patient != null ? patient.getName():"");
         name.setRequired(true);
+        name.setResponsive(false);
         layout.addComponent(name);
 
         TextField patronymic = new TextField("Patronymic");
         patronymic.setValue(patient != null ? patient.getPatronymic():"");
+        patronymic.setResponsive(false);
         layout.addComponent(patronymic);
 
         TextField phone = new TextField("Phone");
         phone.setDescription("79XXXXXXXXX");
         phone.setValue(patient != null ? "7" + patient.getPhone_number():"7");
         phone.addValidator(new RegexpValidator("7\\d{10}","Please, enter valid phone number"));
+        phone.setResponsive(false);
         layout.addComponent(phone);
 
         Button ok = new Button("OK");
@@ -67,6 +72,11 @@ public class PatientFormUI extends UI {
         });
         layout.addComponent(ok);
         layout.addComponent(cancel);
-        setContent(layout);
+        setContent(layout);*/
+        this.addComponent(new Label("yap"));
+    }
+
+    @Override
+    public void enter(ViewChangeListener.ViewChangeEvent event) {
     }
 }
