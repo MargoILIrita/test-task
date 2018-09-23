@@ -15,11 +15,24 @@
         <init-param>
             <description>Vaadin UI to display</description>
             <param-name>UI</param-name>
-            <param-value>com.haulmont.testtask.MainUI</param-value>
+            <param-value>com.haulmont.testtask.view.PatientListUI</param-value>
         </init-param>
     </servlet>
     <servlet-mapping>
         <servlet-name>Vaadin Application Servlet</servlet-name>
         <url-pattern>/*</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>AddView</servlet-name>
+        <servlet-class>com.vaadin.server.VaadinServlet</servlet-class>
+        <init-param>
+            <description>AddView</description>
+            <param-name>UI</param-name>
+            <param-value>com.haulmont.testtask.view.PatientFormUI</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddView</servlet-name>
+        <url-pattern>/add</url-pattern>
     </servlet-mapping>
 </web-app>
