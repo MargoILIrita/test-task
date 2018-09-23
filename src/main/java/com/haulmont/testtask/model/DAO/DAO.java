@@ -11,18 +11,19 @@ import java.util.*;
  * Created by Маргарита on 28.05.2016.
  */
 public abstract class DAO {
-    protected static EntityManagerFactory entityManagerFactory;
+    private static EntityManagerFactory entityManagerFactory;
     private final static String PATIENT = "com.haulmont.testtask.model.Entities.Patient";
     private final static String DOCTOR = "com.haulmont.testtask.model.Entities.Doctor";
     private final static String RECIPE = "com.haulmont.testtask.model.Entities.Recipe";
 
-    protected EntityManager entityManager;
+    protected static EntityManager entityManager;
 
 public void init(){
     if (entityManagerFactory == null) {
         entityManagerFactory = Persistence.createEntityManagerFactory("ru.easyjava.data.jpa.hibernate");
     }
-    }
+    if(entityManager == null) entityManager = entityManagerFactory.createEntityManager();
+}
 
     public abstract List getList();
 

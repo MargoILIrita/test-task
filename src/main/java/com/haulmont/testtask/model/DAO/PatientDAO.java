@@ -10,7 +10,6 @@ public class PatientDAO extends DAO {
      PatientDAO() {
         try {
             super.init();
-            entityManager = entityManagerFactory.createEntityManager();
         }
         catch (Exception e){
             e.printStackTrace();

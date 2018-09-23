@@ -10,7 +10,6 @@ public class RecipeDAO extends DAO {
      RecipeDAO() {
         try {
             super.init();
-            entityManager = entityManagerFactory.createEntityManager();
         }
         catch (Exception e){
             e.printStackTrace();
