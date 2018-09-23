@@ -16,6 +16,7 @@ import com.vaadin.ui.themes.ValoTheme;
 @Theme(ValoTheme.THEME_NAME)
 public class PatientListUI extends UI{
 
+    private static final String THISPAGE  =  "";
     private String phoneformat = "+7 (%s) %s";
     private Object tableValue;
 
@@ -36,11 +37,16 @@ public class PatientListUI extends UI{
 
         Button add = new Button("Add");
         add.addClickListener((Button.ClickListener) event -> {
-            getPage().setLocation(String.format("/add?id=%s",tableValue));
+            getPage().setLocation(String.format("/add?return=%s",THISPAGE));
 
         });
         layout1.addComponent(add);
-        layout1.addComponent(new Button("Change"));
+        Button change = new Button("Change");
+        change.addClickListener((Button.ClickListener) event -> {
+            getPage().setLocation(String.format("/add?id=%s&return=%s",tableValue, THISPAGE));
+
+        });
+        layout1.addComponent(change);
         layout1.addComponent(new Button("Delete"));
 
         layout.addComponent(layout1);
