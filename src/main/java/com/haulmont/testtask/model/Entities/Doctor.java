@@ -2,8 +2,6 @@ package com.haulmont.testtask.model.Entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 
 @Entity
 public class Doctor extends AbstractHuman implements DTO {
@@ -16,14 +14,14 @@ public class Doctor extends AbstractHuman implements DTO {
     public Doctor(String name, String surname, String patronomyc , String specialization) {
         this.specialization = specialization;
         this.name = name;
-        this.surname = surname;
+        this.lastName = surname;
         this.patronymic = patronomyc;
     }
 
     public Doctor(long id, String name, String surname, String patronomyc , String specialization) {
         this.specialization = specialization;
         this.name = name;
-        this.surname = surname;
+        this.lastName = surname;
         this.patronymic = patronomyc;
         this.id = id;
     }
@@ -42,7 +40,7 @@ public class Doctor extends AbstractHuman implements DTO {
                        "specialization='" + specialization + '\'' +
                        ", id=" + id +
                        ", name='" + name + '\'' +
-                       ", surname='" + surname + '\'' +
+                       ", surname='" + lastName + '\'' +
                        ", patronymic='" + patronymic + '\'' +
                        '}';
     }

@@ -17,7 +17,10 @@ public class DoctorDAO extends DAO {
     }
 
     public Doctor changeEntity(DTO doc){
-        return entityManager.merge((Doctor) doc);
+         entityManager.getTransaction().begin();
+         Doctor doctor = entityManager.merge((Doctor) doc);
+         entityManager.getTransaction().commit();
+         return doctor;
     }
 
     public Doctor getEntity(long id){
@@ -26,12 +29,16 @@ public class DoctorDAO extends DAO {
 
     public Doctor addEntity(DTO entity){
          Doctor doc = (Doctor)entity;
+        entityManager.getTransaction().begin();
         entityManager.persist(doc);
+        entityManager.getTransaction().commit();
         entityManager.refresh(doc);
         return doc;
     }
     public void deleteEntity(long id){
+         entityManager.getTransaction().begin();
         entityManager.remove(entityManager.find(Doctor.class, id));
+        entityManager.getTransaction().commit();
     }
 
 

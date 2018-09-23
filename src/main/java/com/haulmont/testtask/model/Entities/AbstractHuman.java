@@ -2,20 +2,21 @@ package com.haulmont.testtask.model.Entities;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
 public class AbstractHuman {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected long id;
 
     @Column(nullable = false)
     protected String name;
 
     @Column(nullable = false)
-    protected String surname;
+    protected String lastName;
 
     protected String patronymic;
 
@@ -27,12 +28,12 @@ public class AbstractHuman {
         this.name = name;
     }
 
-    public String getSurname() {
-        return surname;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public void setLastName(String surname) {
+        this.lastName = surname;
     }
 
     public String getPatronymic() {

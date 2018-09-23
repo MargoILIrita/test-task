@@ -3,40 +3,48 @@ package com.haulmont.testtask.view;
 import com.haulmont.testtask.model.DAO.DAO;
 import com.haulmont.testtask.model.Entities.Patient;
 import com.vaadin.annotations.Theme;
+import com.vaadin.data.Container;
+import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.validator.RegexpValidator;
-import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.UI;
+import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
 
 @Theme(ValoTheme.THEME_NAME)
-public class PatientFormUI extends UI {
+public class PatientFormUI extends Window {
     private Patient patient = null;
-    private String returnURL = "";
+    private DAO dao = null;
+    private BeanItemContainer container;
 
-    @Override
-    protected void init(VaadinRequest request) {
-         DAO dao = null;
+    public  PatientFormUI(Patient patient, Container container) {
+        this.container = (BeanItemContainer)container;
         try {
             dao = DAO.getImplementation(Patient.class);
         }
         catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
-        if(request.getParameter("id") != null) patient = (Patient) dao.getEntity(Long.parseLong(request.getParameter("id")));
-        returnURL = request.getParameter("return");
+        if(patient != null) this.patient = patient;
 
+        FormLayout layout = printComponent();
+        setContent(layout);
+    }
+
+    public PatientFormUI(Container container){
+        this(null, container);
+    }
+
+    private FormLayout printComponent(){
         FormLayout layout = new FormLayout();
-        TextField surname = new TextField("Surname");
-        surname.setValue(patient != null ? patient.getSurname():"");
+        TextField surname = new TextField("Last Name");
+        surname.setValue(patient != null ? patient.getLastName() : "");
         surname.setRequired(true);
-        //surname.set();
         layout.addComponent(surname);
 
-        TextField name = new TextField("Name");
-        name.setValue(patient != null ? patient.getName():"");
+        TextField name = new TextField("First Name");
+        name.setValue(patient != null ? patient.getName() : "");
         name.setRequired(true);
         name.setResponsive(false);
         layout.addComponent(name);
@@ -56,21 +64,25 @@ public class PatientFormUI extends UI {
         Button ok = new Button("OK");
         DAO finalDao = dao;
         ok.addClickListener((Button.ClickListener) event -> {
+            System.out.println("addClickListener");
             if (patient == null){
-                finalDao.addEntity(new Patient(name.getValue(), surname.getValue(), patronymic.getValue(), phone.getValue()));
+                finalDao.addEntity(new Patient(name.getValue(), surname.getValue(), patronymic.getValue(), phone.getValue().substring(1)));
             }
             else {
-                finalDao.changeEntity(new Patient(patient.getId(),name.getValue(), surname.getValue(), patronymic.getValue(), phone.getValue()));
+                finalDao.changeEntity(new Patient(patient.getId(),name.getValue(), surname.getValue(),
+                                                  patronymic.getValue(), phone.getValue().substring(1)));
             }
-            getPage().setLocation("/" + returnURL);
+            container.removeAllItems();
+            container.addAll(finalDao.getList());
+            this.close();
         });
         Button cancel = new Button("Cancel");
         cancel.addClickListener((Button.ClickListener)  event ->{
-            getPage().setLocation("/" + returnURL);
+            this.close();
         });
         layout.addComponent(ok);
         layout.addComponent(cancel);
         layout.setResponsive(false);
-        setContent(layout);
+        return layout;
     }
 }

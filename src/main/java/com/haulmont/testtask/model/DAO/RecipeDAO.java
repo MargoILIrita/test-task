@@ -17,7 +17,10 @@ public class RecipeDAO extends DAO {
     }
 
     public Recipe changeEntity(DTO recipe){
-        return entityManager.merge((Recipe) recipe);
+        entityManager.getTransaction().begin();
+        Recipe recipe1 = entityManager.merge((Recipe) recipe);
+        entityManager.getTransaction().commit();
+        return recipe1;
     }
 
     public Recipe getEntity(long id){
@@ -25,13 +28,17 @@ public class RecipeDAO extends DAO {
     }
 
     public Recipe addEntity(DTO entity){
-         Recipe recipe = (Recipe)entity;
+        entityManager.getTransaction().begin();
+        Recipe recipe = (Recipe)entity;
         entityManager.persist(recipe);
+        entityManager.getTransaction().commit();
         entityManager.refresh(recipe);
         return recipe;
     }
     public void deleteEntity(long id){
+        entityManager.getTransaction().begin();
         entityManager.remove(entityManager.find(Recipe.class, id));
+        entityManager.getTransaction().commit();
     }
 
     @Override
