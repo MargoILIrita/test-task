@@ -6,11 +6,8 @@ import com.haulmont.testtask.model.Entities.Patient;
 import com.haulmont.testtask.model.Entities.Recipe;
 import com.haulmont.testtask.view.ListUtil;
 import com.vaadin.annotations.Theme;
-import com.vaadin.data.Container;
-import com.vaadin.data.Item;
 import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItemContainer;
-import com.vaadin.event.FieldEvents;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.FormLayout;
@@ -21,8 +18,6 @@ import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.themes.ValoTheme;
-
-import javax.xml.soap.Text;
 
 
 @Theme(ValoTheme.THEME_NAME)

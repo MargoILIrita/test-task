@@ -28,7 +28,8 @@ public class Recipe implements DTO{
 
     private Date date;
 
-    private long validity;
+    @Enumerated(EnumType.STRING)
+    private Validity validity;
 
     @Enumerated(EnumType.STRING)
     private Priority priority;
@@ -36,7 +37,7 @@ public class Recipe implements DTO{
     public Recipe() {
     }
 
-    public Recipe(Doctor doctor, Patient patient, String description, Date date, long validity, Priority priority) {
+    public Recipe(Doctor doctor, Patient patient, String description, Date date, Validity validity, Priority priority) {
         this.doctor = doctor;
         this.patient = patient;
         this.description = description;
@@ -45,7 +46,7 @@ public class Recipe implements DTO{
         this.priority = priority;
     }
 
-    public Recipe(long id, Doctor doctor, Patient patient, String description, Date date, long validity, Priority priority) {
+    public Recipe(long id, Doctor doctor, Patient patient, String description, Date date, Validity validity, Priority priority) {
         this.doctor = doctor;
         this.patient = patient;
         this.description = description;
@@ -87,11 +88,11 @@ public class Recipe implements DTO{
         this.description = description;
     }
 
-    public long getValidity() {
+    public Validity getValidity() {
         return validity;
     }
 
-    public void setValidity(long validity) {
+    public void setValidity(Validity validity) {
         this.validity = validity;
     }
 

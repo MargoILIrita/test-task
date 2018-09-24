@@ -5,6 +5,7 @@ import com.haulmont.testtask.model.Entities.Doctor;
 import com.haulmont.testtask.model.Entities.Patient;
 import com.haulmont.testtask.model.Entities.Priority;
 import com.haulmont.testtask.model.Entities.Recipe;
+import com.haulmont.testtask.model.Entities.Validity;
 import com.vaadin.annotations.Theme;
 import com.vaadin.data.Container;
 import com.vaadin.data.util.BeanItemContainer;
@@ -84,8 +85,10 @@ public class RecipeFormUI extends Window {
         date.setValue(recipe == null ? null : recipe.getDate());
         layout.addComponent(date);
 
-        TextField validity = new TextField("Validity");
-        validity.setValue(recipe == null? "" : String.valueOf(recipe.getValidity()));
+        IndexedContainer validityContainer = new IndexedContainer(Arrays.asList(Validity.values()));
+        ComboBox validity = new ComboBox("Priority", validityContainer);
+        validity.setValue(recipe == null? validityContainer.getItem(1): recipe.getValidity());
+        validity.setNullSelectionAllowed(false);
         layout.addComponent(validity);
 
         IndexedContainer priotityContainer = new IndexedContainer(Arrays.asList(Priority.values()));
@@ -102,7 +105,7 @@ public class RecipeFormUI extends Window {
                                               (Patient) selectPatient.getValue(),
                                               description.getValue(),
                                               date.getValue(),
-                                              Long.valueOf(validity.getValue()),
+                                              (Validity) validity.getValue(),
                                               (Priority) priority.getValue()));
             }
             else {
@@ -111,7 +114,7 @@ public class RecipeFormUI extends Window {
                                                  (Patient) selectPatient.getValue(),
                                                  description.getValue(),
                                                  date.getValue(),
-                                                 Long.valueOf(validity.getValue()),
+                                                 (Validity) validity.getValue(),
                                                  (Priority) priority.getValue()));
             }
             container.removeAllItems();
