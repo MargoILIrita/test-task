@@ -9,9 +9,12 @@ import com.haulmont.testtask.model.Entities.Recipe;
 import com.vaadin.annotations.Theme;
 import com.vaadin.data.Container;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.data.util.converter.Converter;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
+
+import java.util.Locale;
 
 import static com.haulmont.testtask.Constants.DOCTOR;
 import static com.haulmont.testtask.Constants.PATIENT;
@@ -87,6 +90,48 @@ public class ListUtil {
         table.setColumnHeader("date", "Creation date ");
         table.setColumnHeader("validity", "Validity");
         table.setColumnHeader("priority", "Priority");
+        table.setConverter("doctor", new Converter<String, Doctor>() {
+            @Override
+            public Doctor convertToModel(String value, Class<? extends Doctor> targetType, Locale locale) throws ConversionException {
+                return (Doctor) beanItemContainer.getItem(Long.valueOf(value.split(" ")[1])).getBean();
+            }
+
+            @Override
+            public String convertToPresentation(Doctor value, Class<? extends String> targetType, Locale locale) throws ConversionException {
+                return value.getLastName() + " " + value.getId();
+            }
+
+            @Override
+            public Class<Doctor> getModelType() {
+                return Doctor.class;
+            }
+
+            @Override
+            public Class<String> getPresentationType() {
+                return String.class;
+            }
+        });
+        table.setConverter("patient", new Converter<String, Patient>() {
+            @Override
+            public Patient convertToModel(String value, Class<? extends Patient> targetType, Locale locale) throws ConversionException {
+                return (Patient) beanItemContainer.getItem(Long.valueOf(value.split(" ")[1])).getBean();
+            }
+
+            @Override
+            public String convertToPresentation(Patient value, Class<? extends String> targetType, Locale locale) throws ConversionException {
+                return value.getLastName() + " " + value.getId();
+            }
+
+            @Override
+            public Class<Patient> getModelType() {
+                return Patient.class;
+            }
+
+            @Override
+            public Class<String> getPresentationType() {
+                return String.class;
+            }
+        });
         table.setVisibleColumns(new Object[]{"priority", "doctor", "patient", "description", "date", "validity" });
         table.setSelectable(true);
         return table;
