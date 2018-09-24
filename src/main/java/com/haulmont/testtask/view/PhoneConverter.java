@@ -18,7 +18,6 @@ public class PhoneConverter implements Converter<String,String> {
         String pattern = "[+]7 9\\d{2} \\d{7}";
         if(value.isEmpty()) return "";
         if(value.matches(pattern)) return value;
-        System.out.println("convertToPresentation " + String.format(PHONE_FORMAT, value.substring(0,3),value.substring(3)));
         return (String.format(PHONE_FORMAT, value.substring(0,3),value.substring(3)));
     }
 

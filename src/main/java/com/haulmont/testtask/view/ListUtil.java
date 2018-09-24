@@ -10,6 +10,7 @@ import com.vaadin.annotations.Theme;
 import com.vaadin.data.Container;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.util.converter.Converter;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
@@ -22,7 +23,7 @@ import static com.haulmont.testtask.Constants.RECIPE;
 
 @Theme(ValoTheme.THEME_NAME)
 public class ListUtil {
-    private  DAO dao = null;
+    private DAO dao = null;
     Class tClass;
 
     public ListUtil(Class tClass) {
@@ -90,6 +91,13 @@ public class ListUtil {
         table.setColumnHeader("date", "Creation date ");
         table.setColumnHeader("validity", "Validity");
         table.setColumnHeader("priority", "Priority");
+        setConverters(table, beanItemContainer);
+        table.setVisibleColumns(new Object[]{"priority", "doctor", "patient", "description", "date", "validity" });
+        table.setSelectable(true);
+        return table;
+    }
+
+    private void setConverters(Table table, BeanItemContainer beanItemContainer){
         table.setConverter("doctor", new Converter<String, Doctor>() {
             @Override
             public Doctor convertToModel(String value, Class<? extends Doctor> targetType, Locale locale) throws ConversionException {
@@ -132,17 +140,19 @@ public class ListUtil {
                 return String.class;
             }
         });
-        table.setVisibleColumns(new Object[]{"priority", "doctor", "patient", "description", "date", "validity" });
-        table.setSelectable(true);
-        return table;
     }
 
-    public  void deleteAction(DTO patient, Container container){
-        dao.deleteEntity(patient.getId());
-        BeanItemContainer container1 = (BeanItemContainer)container;
-        container1.removeAllItems();
-        container1.addAll(dao.getList());
-
+    public void deleteAction(DTO patient, Container container){
+        try {
+            dao.deleteEntity(patient.getId());
+        }
+        catch (Exception e){
+            Notification.show("Enable to delete entity. Recipe for id = " + patient.getId() +" exist.",
+                              Notification.Type.ERROR_MESSAGE);
+        }
+            BeanItemContainer container1 = (BeanItemContainer)container;
+            container1.removeAllItems();
+            container1.addAll(dao.getList());
     }
 
     public static Window getImplementation(Class cl, DTO dto, Container beanItemContainer) throws NoSuchMethodException {

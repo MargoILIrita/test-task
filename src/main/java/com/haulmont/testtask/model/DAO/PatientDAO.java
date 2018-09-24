@@ -38,7 +38,6 @@ public class PatientDAO extends DAO {
         entityManager.getTransaction().begin();
         entityManager.persist(patient);
         entityManager.getTransaction().commit();
-        System.out.println(patient);
         entityManager.refresh(patient);
         return patient;
     }

@@ -63,7 +63,6 @@ public class DoctorDAO extends DAO {
         Query query = entityManager.createQuery(hql);
         query.setParameter("id", id);
         List<Long> results = query.getResultList();
-        System.out.println("getStatistic generated value " + results.iterator().next() + " for id " + id);
         return Math.toIntExact(results.iterator().next());
 
     }

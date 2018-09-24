@@ -4,68 +4,56 @@ import com.haulmont.testtask.model.DAO.DAO;
 import com.haulmont.testtask.model.Entities.Doctor;
 import com.vaadin.annotations.Theme;
 import com.vaadin.data.Container;
-import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.FormLayout;
+import com.vaadin.ui.Layout;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
 
 @Theme(ValoTheme.THEME_NAME)
-public class DoctorFormUI extends Window {
-    private Doctor doctor = null;
-    private DAO dao = null;
-    private BeanItemContainer container;
+public class DoctorFormUI extends AbstractHumanFormUI {
+    private TextField specialization;
 
     public  DoctorFormUI(Doctor doctor, Container container) {
-        this.container = (BeanItemContainer)container;
+        super(doctor,container);
         try {
             dao = DAO.getImplementation(Doctor.class);
         }
         catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
-        if(doctor != null) this.doctor = doctor;
-
         FormLayout layout = printComponent();
         setContent(layout);
     }
 
-    public DoctorFormUI(Container container){
-        this(null, container);
+
+    protected FormLayout printComponent(){
+        FormLayout layout = new FormLayout();
+        printName(layout);
+        printSpecialization(layout);
+        printButtons(layout);
+        return layout;
     }
 
-    private FormLayout printComponent(){
-        FormLayout layout = new FormLayout();
-        TextField surname = new TextField("Last Name");
-        surname.setValue(doctor != null ? doctor.getLastName() : "");
-        surname.setRequired(true);
-        layout.addComponent(surname);
-
-        TextField name = new TextField("First Name");
-        name.setValue(doctor != null ? doctor.getName() : "");
-        name.setRequired(true);
-        layout.addComponent(name);
-
-        TextField patronymic = new TextField("Patronymic");
-        patronymic.setValue(doctor != null ? doctor.getPatronymic():"");
-        layout.addComponent(patronymic);
-
-        TextField specialization = new TextField("Specialization");
-        specialization.setValue(doctor != null ? doctor.getSpecialization(): "");
+    private void printSpecialization(Layout layout){
+        specialization = new TextField("Specialization");
+        specialization.setValue(human != null ? ((Doctor)human).getSpecialization(): "");
         specialization.setRequired(true);
         layout.addComponent(specialization);
+    }
 
+    protected void printButtons(Layout layout){
         Button ok = new Button("OK");
         DAO finalDao = dao;
         ok.addClickListener((Button.ClickListener) event -> {
-            System.out.println("addClickListener");
-            if (doctor == null){
+            surname.validate();
+            name.validate();
+            if (human == null){
                 finalDao.addEntity(new Doctor(name.getValue(), surname.getValue(), patronymic.getValue(), specialization.getValue()));
             }
             else {
-                finalDao.changeEntity(new Doctor(doctor.getId(),name.getValue(), surname.getValue(),
-                                                  patronymic.getValue(), specialization.getValue()));
+                finalDao.changeEntity(new Doctor(human.getId(),name.getValue(), surname.getValue(),
+                                                 patronymic.getValue(), specialization.getValue()));
             }
             container.removeAllItems();
             container.addAll(finalDao.getList());
@@ -77,7 +65,5 @@ public class DoctorFormUI extends Window {
         });
         layout.addComponent(ok);
         layout.addComponent(cancel);
-        layout.setResponsive(false);
-        return layout;
     }
 }
