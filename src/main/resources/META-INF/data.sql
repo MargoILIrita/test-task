@@ -4,3 +4,5 @@ insert into Doctor (name, lastName, patronymic, specialization) values ('Natalia
 insert into Patient (name, lastName, patronymic, phone_number) values ('Anastasia', 'Hadaeva', 'Maksimovna', '9154865532');
 insert into Patient (name, lastName, patronymic, phone_number) values ('Ilya', 'Alekseev', 'Alekseevich', '9658547812');
 insert into Patient (name, lastName, patronymic, phone_number) values ('Anastasia', 'Ulyanova', 'Mihailovna', '9234576198');
+insert into Recipe (date, description, priority, validity, doctor_id, patient_id) values (current_timestamp, 'drugs','CITO', 123, 1, 2);
+insert into Recipe (date, description, priority, validity, doctor_id, patient_id) values (current_timestamp, 'kastorka' ,'NORMAL', 123, 2, 1);

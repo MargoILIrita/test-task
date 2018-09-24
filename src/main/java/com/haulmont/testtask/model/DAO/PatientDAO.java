@@ -34,7 +34,6 @@ public class PatientDAO extends DAO {
     }
 
     public Patient addEntity(DTO entity){
-        System.out.println("addEntity");
         Patient patient = (Patient)entity;
         entityManager.getTransaction().begin();
         entityManager.persist(patient);
