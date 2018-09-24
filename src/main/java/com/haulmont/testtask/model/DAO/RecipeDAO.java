@@ -1,6 +1,7 @@
 package com.haulmont.testtask.model.DAO;
 
 import com.haulmont.testtask.model.Entities.DTO;
+import com.haulmont.testtask.model.Entities.Doctor;
 import com.haulmont.testtask.model.Entities.Recipe;
 
 import java.util.List;

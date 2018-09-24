@@ -44,7 +44,7 @@ public class PatientFormUI extends Window {
         layout.addComponent(surname);
 
         TextField name = new TextField("First Name");
-        name.setValue(patient != null ? patient.getName() : "");
+        name.setValue(patient == null ? "": patient.getName());
         name.setRequired(true);
         layout.addComponent(name);
 

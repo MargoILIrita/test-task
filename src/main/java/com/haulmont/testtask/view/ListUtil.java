@@ -5,6 +5,7 @@ import com.haulmont.testtask.model.DAO.DoctorDAO;
 import com.haulmont.testtask.model.Entities.DTO;
 import com.haulmont.testtask.model.Entities.Doctor;
 import com.haulmont.testtask.model.Entities.Patient;
+import com.haulmont.testtask.model.Entities.Recipe;
 import com.vaadin.annotations.Theme;
 import com.vaadin.data.Container;
 import com.vaadin.data.util.BeanItemContainer;
@@ -14,6 +15,7 @@ import com.vaadin.ui.themes.ValoTheme;
 
 import static com.haulmont.testtask.Constants.DOCTOR;
 import static com.haulmont.testtask.Constants.PATIENT;
+import static com.haulmont.testtask.Constants.RECIPE;
 
 @Theme(ValoTheme.THEME_NAME)
 public class ListUtil {
@@ -39,6 +41,8 @@ public class ListUtil {
                 return patientTable(beanItemContainer);
             case DOCTOR:
                 return doctorTable(beanItemContainer);
+            case RECIPE:
+                return recipesTable(beanItemContainer);
         }
         return null;
     }
@@ -74,6 +78,20 @@ public class ListUtil {
         return table;
     }
 
+    private Table recipesTable(BeanItemContainer beanItemContainer){
+        Table table = new Table("Recipes", beanItemContainer);
+        table.setPageLength(table.size());
+        table.setColumnHeader("doctor", "Doctor ID");
+        table.setColumnHeader("patient", "Patient ID");
+        table.setColumnHeader("description", "Description");
+        table.setColumnHeader("date", "Creation date ");
+        table.setColumnHeader("validity", "Validity");
+        table.setColumnHeader("priority", "Priority");
+        table.setVisibleColumns(new Object[]{"priority", "doctor", "patient", "description", "date", "validity" });
+        table.setSelectable(true);
+        return table;
+    }
+
     public  void deleteAction(DTO patient, Container container){
         dao.deleteEntity(patient.getId());
         BeanItemContainer container1 = (BeanItemContainer)container;
@@ -88,8 +106,8 @@ public class ListUtil {
                 return new PatientFormUI((Patient) dto, beanItemContainer);
             case DOCTOR:
                 return new DoctorFormUI((Doctor) dto, beanItemContainer);
-            //case RECIPE:
-            //  return new RecipeDAO();
+            case RECIPE:
+                return new RecipeFormUI((Recipe)dto, beanItemContainer);
         }
         throw new NoSuchMethodException("No such implementation " + cl.getName());
     }

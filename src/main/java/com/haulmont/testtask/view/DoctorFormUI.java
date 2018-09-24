@@ -2,13 +2,16 @@ package com.haulmont.testtask.view;
 
 import com.haulmont.testtask.model.DAO.DAO;
 import com.haulmont.testtask.model.Entities.Doctor;
+import com.vaadin.annotations.Theme;
 import com.vaadin.data.Container;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.Window;
+import com.vaadin.ui.themes.ValoTheme;
 
+@Theme(ValoTheme.THEME_NAME)
 public class DoctorFormUI extends Window {
     private Doctor doctor = null;
     private DAO dao = null;

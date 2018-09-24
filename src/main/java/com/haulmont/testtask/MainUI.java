@@ -3,6 +3,7 @@ package com.haulmont.testtask;
 import com.haulmont.testtask.model.Entities.DTO;
 import com.haulmont.testtask.model.Entities.Doctor;
 import com.haulmont.testtask.model.Entities.Patient;
+import com.haulmont.testtask.model.Entities.Recipe;
 import com.haulmont.testtask.view.ListUtil;
 import com.vaadin.annotations.Theme;
 import com.vaadin.server.VaadinRequest;
@@ -25,6 +26,7 @@ public class MainUI extends UI {
         TabSheet tabSheet = new TabSheet();
         tabSheet.addTab(printListTab(Patient.class), "Patient List");
         tabSheet.addTab(printListTab(Doctor.class), "Doctor List");
+        tabSheet.addTab(printListTab(Recipe.class),"Recipes List");
         setContent(tabSheet);
     }
 
