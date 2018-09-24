@@ -2,20 +2,46 @@ package com.haulmont.testtask.model.Entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 
 @Entity
-public class Doctor extends AbstractHuman {
+public class Doctor extends AbstractHuman implements DTO {
     @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Specialization specialization;
+    private String specialization;
 
-    public Specialization getSpecialization() {
+    public Doctor() {
+    }
+
+    public Doctor(String name, String surname, String patronomyc , String specialization) {
+        this.specialization = specialization;
+        this.name = name;
+        this.lastName = surname;
+        this.patronymic = patronomyc;
+    }
+
+    public Doctor(long id, String name, String surname, String patronomyc , String specialization) {
+        this.specialization = specialization;
+        this.name = name;
+        this.lastName = surname;
+        this.patronymic = patronomyc;
+        this.id = id;
+    }
+
+    public String getSpecialization() {
         return specialization;
     }
 
-    public void setSpecialization(Specialization specialization) {
+    public void setSpecialization(String specialization) {
         this.specialization = specialization;
+    }
+
+    @Override
+    public String toString() {
+        return "Doctor{" +
+                       "specialization='" + specialization + '\'' +
+                       ", id=" + id +
+                       ", name='" + name + '\'' +
+                       ", surname='" + lastName + '\'' +
+                       ", patronymic='" + patronymic + '\'' +
+                       '}';
     }
 }

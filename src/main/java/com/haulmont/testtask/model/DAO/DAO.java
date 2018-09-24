@@ -1,31 +1,50 @@
 package com.haulmont.testtask.model.DAO;
 
+import com.haulmont.testtask.model.Entities.DTO;
 
-import org.hsqldb.jdbcDriver;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import java.util.*;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import static com.haulmont.testtask.Constants.DOCTOR;
+import static com.haulmont.testtask.Constants.PATIENT;
+import static com.haulmont.testtask.Constants.RECIPE;
+
 /**
  * Created by Маргарита on 28.05.2016.
  */
 public abstract class DAO {
-    Connection con;
+    private static EntityManagerFactory entityManagerFactory;
+
+    protected static EntityManager entityManager;
+
 public void init(){
-    try {
-        try {
-            Class.forName("org.hsqldb.jdbc.JDBCDriver" );
-        } catch (Exception e) {
-            System.err.println("ERROR: failed to load HSQLDB JDBC driver.");
-            e.printStackTrace();
-            return;
-        }
-        DriverManager.registerDriver(new jdbcDriver());
-        con= DriverManager.getConnection("jdbc:hsqldb:mem:test","SA", "");
-        con.createStatement().executeUpdate("create table contacts (name varchar(45),email varchar(45),phone varchar(45))");
-        con.createStatement().execute("insert into contacts values ('trash', 'trash', 'trash')");
-    } catch (SQLException e) {
-        e.printStackTrace(System.out);
+    if (entityManagerFactory == null) {
+        entityManagerFactory = Persistence.createEntityManagerFactory("ru.easyjava.data.jpa.hibernate");
     }
+    if(entityManager == null) entityManager = entityManagerFactory.createEntityManager();
 }
+
+    public abstract List getList();
+
+    public abstract DTO getEntity(long id);
+
+    public abstract DTO changeEntity(DTO entity);
+
+    public abstract void deleteEntity(long id);
+
+    public abstract DTO addEntity(DTO entity);
+
+    public static DAO getImplementation(Class cl) throws NoSuchMethodException {
+        switch(cl.getName()){
+            case PATIENT:
+                return new PatientDAO();
+            case DOCTOR:
+                return new DoctorDAO();
+            case RECIPE:
+                return new RecipeDAO();
+        }
+        throw new NoSuchMethodException("No such implementation " + cl.getName());
+    }
 }
