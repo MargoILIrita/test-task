@@ -3,7 +3,6 @@ package com.haulmont.testtask.model.DAO;
 import com.haulmont.testtask.model.Entities.DTO;
 import com.haulmont.testtask.model.Entities.Patient;
 
-import javax.persistence.EntityTransaction;
 import java.util.List;
 
 public class PatientDAO extends DAO {

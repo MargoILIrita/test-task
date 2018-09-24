@@ -11,6 +11,7 @@ import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
+import java.util.Locale;
 
 @Theme(ValoTheme.THEME_NAME)
 public class PatientFormUI extends Window {
@@ -53,21 +54,26 @@ public class PatientFormUI extends Window {
         layout.addComponent(patronymic);
 
         TextField phone = new TextField("Phone");
-        phone.setDescription("7 9XX XXXXXXX");
-        phone.setValue(patient != null ? patient.getPhone_number():"7");
-        phone.addValidator(new RegexpValidator("7 \\d{3} \\d{7}","Please, enter valid phone number"));
+        phone.setDescription("9XXXXXXXXX");
+        phone.setValue(patient != null ? patient.getPhone_number():"");
+        phone.setConverter(new PhoneConverter());
+        phone.addValidator(new RegexpValidator("9\\d{9}","Please, enter valid phone number"));
         layout.addComponent(phone);
 
         Button ok = new Button("OK");
         DAO finalDao = dao;
         ok.addClickListener((Button.ClickListener) event -> {
             phone.validate();
+            System.out.println(phone.getConverter().convertToModel(phone.getValue(), String.class, Locale.ROOT));
             if (patient == null){
-                finalDao.addEntity(new Patient(name.getValue(), surname.getValue(), patronymic.getValue(), phone.getValue().substring(1)));
+                finalDao.addEntity(new Patient(name.getValue(), surname.getValue(), patronymic.getValue(),
+                                               (String) phone.getConverter().convertToModel(
+                                                       phone.getValue(), String.class, Locale.ROOT)));
             }
             else {
                 finalDao.changeEntity(new Patient(patient.getId(),name.getValue(), surname.getValue(),
-                                                  patronymic.getValue(), phone.getValue().substring(1)));
+                                                  patronymic.getValue(), (String) phone.getConverter().convertToModel(
+                        phone.getValue(), String.class, Locale.ROOT)));
             }
             container.removeAllItems();
             container.addAll(finalDao.getList());

@@ -57,8 +57,10 @@ public class DoctorDAO extends DAO {
     }
 
     public int getStatistic(long id){
-        return entityManager.createQuery(
+        int a = entityManager.createQuery(
                 String.format("select count(*) from Recipe where doctor_id = %d", id)).getFirstResult();
+        System.out.println("getStatistic generated value " + a + " for id " + id);
+        return a;
 
     }
 }
